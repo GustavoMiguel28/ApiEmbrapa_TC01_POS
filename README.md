@@ -1,6 +1,6 @@
 # API Embrapa
 
-Este é um projeto de desenvolvido de API com Flask, que inclui web scraping, autenticação básica e rotas de acesso aos dados da Embrapa.
+Este é um projeto de desenvolvimento de API com Flask, que inclui web scraping, autenticação básica e rotas de acesso aos dados da Embrapa.
 
 ## 📖 Descrição
 A **API Embrapa** é uma aplicação Python que permite autenticação de usuários, consultas de dados e funcionalidades específicas por meio de endpoints RESTful.
