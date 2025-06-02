@@ -81,16 +81,22 @@ def login():
       401:
         description: Nome ou senha inválidos
     """
+    data = request.get_json()
     try:
-      data = request.get_json()
-      nome = Usuario.query.filter_by(nome=data['nome']).first()
-      if nome and nome.senha == data['senha']:
-        token = create_access_token(identity=str(nome.id))
-        return jsonify({"access_token": token}), 200
-    #senha padrão para acesso (admin/senha)
-    except:
-      data = request.get_json()
-      if data['nome'] == 'admin' and data['senha'] == 'senha':
-        token = create_access_token(identity=str(nome.id))
-        return jsonify({"access_token": token}), 200
-      return jsonify({"error": "Usuario invalido"}), 401
+        usuario = Usuario.query.filter_by(nome=data['nome']).first()
+
+        if usuario and usuario.senha == data['senha']:
+            token = create_access_token(identity=str(usuario.id))
+            return jsonify({"access_token": token}), 200
+
+        # "Senha padrão" para acesso
+        if data['nome'] == 'admin' and data['senha'] == 'senha':
+            token = create_access_token(identity='1')
+            return jsonify({"access_token": token}), 200
+
+        return jsonify({"error": "Nome ou senha inválidos"}), 401
+
+    except Exception as e:
+        # Log do erro (opcional) e retorno do erro genérico
+        print(f"Erro no login: {e}")
+        return jsonify({"error": "Erro interno no servidor"}), 500
